@@ -82,7 +82,7 @@ export const getCurrentTrack = (accessToken) => (dispatch) => {
       track: {
         album: item.album.name,
         artist: item.artists[0].name,
-        duration: data.duration_ms,
+        duration: item.duration_ms,
         id: item.id,
         image: item.album.images[0].url,
         isPlaying: data.is_playing,
@@ -147,7 +147,7 @@ export const login = () => {
   }
 };
 
-export const startPlayback = (accessToken) => (dispatch) => {
+export const startPlayback = (accessToken, position) => (dispatch) => {
   dispatch({
     type: START_PLAYBACK,
   })
@@ -158,13 +158,17 @@ export const startPlayback = (accessToken) => (dispatch) => {
     data: {
       context_uri: process.env.REACT_APP_SPOTIFY_PLAYLIST_URI,
       offset: {
-        position: 0,
+        position,
       }
     },
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${accessToken}`,
     }
+  }).then(() => {
+    setTimeout(() => (
+      dispatch(getCurrentTrack(accessToken))
+    ), 500)
   }).catch((err) => {
     console.log(err)
   })

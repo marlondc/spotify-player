@@ -162,7 +162,7 @@ class User extends Component {
                           : <div className="input__button--play">
                             <button
                               className="input__button"
-                              onClick={() => startPlayback(accessToken)}
+                              onClick={() => startPlayback(accessToken, currentTrack.position)}
                             > Play </button>
                           </div>
                       }
