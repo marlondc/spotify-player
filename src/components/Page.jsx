@@ -13,7 +13,7 @@ class PageDisplay extends Component {
     const {
       accessToken,
       refreshToken,
-    } = this.props.songs
+    } = this.props
 
     if (isNil(accessToken) && isNil(refreshToken)) return <Login {...this.props} />
 

@@ -8,6 +8,7 @@ export const LOGGED_IN = 'LOGGED_IN';
 export const REQUEST_CURRENT_TRACK = 'REQUEST_CURRENT_TRACK';
 export const REQUEST_PLAYLIST = 'REQUEST_PLAYLIST';
 export const REQUEST_TOKENS = 'REQUEST_TOKENS'
+export const RECEIVE_CURRENT_TRACK = 'RECEIVE_CURRENT_TRACK';
 export const RECEIVE_PLAYLIST = 'RECEIVE_PLAYLIST';
 export const RECEIVE_TOKENS = 'RECEIVE_TOKENS'
 export const RECEIVE_TOKENS_ERROR = 'RECEIVE_TOKENS_ERROR'
@@ -64,6 +65,29 @@ export const addToPlaylist = (url, accessToken) => (dispatch) => {
   }
 }
 
+export const getCurrentTrack = (accessToken) => (dispatch) => {
+  dispatch({
+    type: REQUEST_CURRENT_TRACK,
+  });
+  axios.get('https://api.spotify.com/v1/me/player/currently-playing', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    }
+  }).then(({data}) => {
+    const { item } = data;
+    dispatch({
+      type: RECEIVE_CURRENT_TRACK,
+      track: {
+        album: item.album.name,
+        artist: item.artists[0].name,
+        id: item.id,
+        image: item.album.images[0].url,
+        name: item.name,
+      }
+    })
+  })
+}
+
 export const getPlaylistTracks = (accessToken) => (dispatch) => {
   dispatch({
     type: REQUEST_PLAYLIST,
@@ -87,17 +111,6 @@ export const getPlaylistTracks = (accessToken) => (dispatch) => {
       tracks,
     })
   }).catch(err => console.log(err));
-}
-
-export const getCurrentTrack = (accessToken) => (dispatch) => {
-  dispatch({
-    type: REQUEST_CURRENT_TRACK,
-  });
-  axios.get('https://api.spotify.com/v1/me/player/currently-playing', {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    }
-  }).then(({data}) => console.log(data))
 }
 
 export const getTokens = () => (dispatch) => {

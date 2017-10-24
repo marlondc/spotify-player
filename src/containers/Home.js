@@ -1,16 +1,31 @@
 import { connect } from 'react-redux';
+import { filter, isEmpty, equals } from 'ramda';
+
 import Page from '../components/Page';
 import {
   addToPlaylist,
   getCurrentTrack,
   getPlaylistTracks,
-  login,
   getTokens,
+  login,
  } from '../actions/songs';
 
-const mapStateToProps = ({ songs }) => ({
-  songs,
-});
+const mapStateToProps = ({ songs }) => {
+  let displayCurrentTrack;
+
+  const filteredTracks = filter(track => (
+    equals(track, songs.currentTrack)
+  ), songs.tracks);
+
+  displayCurrentTrack = isEmpty(filteredTracks)
+    ? false
+    : songs.currentTrack;
+
+  return {
+    ...songs,
+    currentTrack: displayCurrentTrack,
+  }
+};
 
 const mapDispatchToProps = dispatch => ({
   addToPlaylist: (url, accessToken) => dispatch(addToPlaylist(url, accessToken)),

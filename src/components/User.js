@@ -26,7 +26,7 @@ class User extends Component {
   }
 
   componentWillMount() {
-    const { accessToken } = this.props.songs;
+    const { accessToken } = this.props;
     this.props.getPlaylistTracks(accessToken);
     this.props.getCurrentTrack(accessToken);
   }
@@ -47,7 +47,7 @@ class User extends Component {
 
   handleSubmit() {
     const { spotifyURI } = this.state;
-    const { accessToken } = this.props.songs;
+    const { accessToken } = this.props;
     if (!invalidURI(spotifyURI)) {
       this.props.addToPlaylist(spotifyURI, accessToken)
       this.setState({
@@ -60,7 +60,8 @@ class User extends Component {
     const {
       loading,
       tracks,
-    } = this.props.songs;
+      currentTrack,
+    } = this.props;
 
     const {
       spotifyURI,
@@ -110,19 +111,37 @@ class User extends Component {
                 <p className="title__text">Currently playing</p>
                 <div className="title__line"></div>
               </div>
-              <div className="track track--current">
-                <div className="track__image"></div>
-                <div className="track__details">
-                  <p className="track__name">Name</p>
-                  <p className="track__artist">Artist</p>
-                  <p className="track__album">Album</p>
-                </div>
-              </div>
-              <div className="track__status">
-                <div className="track__status__progress-bar"></div>
-                <div className="track__status__progress-bar track__status__progress-bar--fill"></div>
-                <p className="track__status__time">1:34 <span>left</span></p>
-              </div>
+                {
+                  currentTrack
+                    ? <div>
+                      <div className="track track--current">
+                        <img src={currentTrack.image} alt={currentTrack.album} className="track__image" />
+                        <div className="track__details">
+                          {
+                            currentTrack.name.length > 15
+                              ? <div className="track__marquee">
+                                <p className="track__name">{currentTrack.name}</p>
+                              </div>
+                              : <p className="track__name">{currentTrack.name}</p>
+                          }
+                          <p className="track__artist">{currentTrack.artist}</p>
+                          {
+                            currentTrack.album.length > 22
+                              ? <div className="track__marquee">
+                                <p className="track__album">{currentTrack.album}</p>
+                              </div>
+                              : <p className="track__album">{currentTrack.album}</p>
+                          }
+                        </div>
+                      </div>
+                      <div className="track__status">
+                        <div className="track__status__progress-bar"></div>
+                        <div className="track__status__progress-bar track__status__progress-bar--fill"></div>
+                        <p className="track__status__time">1:34 <span>left</span></p>
+                      </div>
+                    </div>
+                    : <p className="track__name">No currently playing track</p>
+                }
               <div className="title">
                 <p className="title__text">Up next</p>
                 <div className="title__line"></div>
@@ -132,8 +151,20 @@ class User extends Component {
                   <div className="track track--in-list" key={track.id}>
                     <img src={track.image} alt={track.album} className="track__image" />
                     <div className="track__details">
-                      <p className="track__name">{track.name}</p>
-                      <p className="track__artist">{track.artist}</p>
+                      {
+                        track.name.length > 19
+                          ? <div className="track__marquee">
+                            <p className="track__name">{track.name}</p>
+                          </div>
+                          : <p className="track__name">{track.name}</p>
+                      }
+                      {
+                        track.artist.length > 30
+                          ? <div className="track__marquee">
+                            <p className="track__artist">{track.artist}</p>
+                          </div>
+                          : <p className="track__artist">{track.artist}</p>
+                      }
                       {
                         track.album.length > 22
                           ? <div className="track__marquee">

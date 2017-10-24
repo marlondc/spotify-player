@@ -1,21 +1,24 @@
 import {
-  REQUEST_PLAYLIST,
-  RECEIVE_PLAYLIST,
   ADDED_TO_PLAYLIST,
   LOGGED_IN,
-  REQUEST_TOKENS,
+  RECEIVE_CURRENT_TRACK,
+  RECEIVE_PLAYLIST,
   RECEIVE_TOKENS,
   RECEIVE_TOKENS_ERROR,
+  REQUEST_CURRENT_TRACK,
+  REQUEST_PLAYLIST,
+  REQUEST_TOKENS,
 } from '../actions/songs';
 
 /** The initial state; no tokens and no user info */
 const initialState = {
   accessToken: null,
-  refreshToken: null,
+  currentTrack: false,
   loading: true,
-  tracks: [],
-  searchResults: [],
   logged_in: false,
+  refreshToken: null,
+  searchResults: [],
+  tracks: [],
 };
 
 /**
@@ -35,6 +38,25 @@ export default function reduce(state = initialState, action) {
     return {
       ...state,
       logged_in: true,
+    }
+  }
+
+  case REQUEST_CURRENT_TRACK: {
+    return state;
+  }
+
+  case REQUEST_PLAYLIST: {
+    return state;
+  }
+
+  case REQUEST_TOKENS: {
+    return state;
+  }
+
+  case RECEIVE_CURRENT_TRACK: {
+    return {
+      ...state,
+      currentTrack: action.track,
     }
   }
 
@@ -60,14 +82,6 @@ export default function reduce(state = initialState, action) {
   }
 
   case RECEIVE_TOKENS_ERROR : {
-    return state;
-  }
-
-  case REQUEST_PLAYLIST: {
-    return state;
-  }
-
-  case REQUEST_TOKENS: {
     return state;
   }
 
