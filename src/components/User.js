@@ -18,6 +18,7 @@ class User extends Component {
     this.state = {
       spotifyURI: '',
       showModal: false,
+      loading: true,
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -29,6 +30,14 @@ class User extends Component {
     const { accessToken } = this.props;
     this.props.getPlaylistTracks(accessToken);
     this.props.getCurrentTrack(accessToken);
+  }
+
+  componentDidMount() {
+    setTimeout(() => (
+      this.setState({
+        loading: false,
+      })
+    ), 2000)
   }
 
   handleInputChange(event) {
@@ -58,7 +67,6 @@ class User extends Component {
 
   render() {
     const {
-      loading,
       tracks,
       currentTrack,
     } = this.props;
@@ -68,8 +76,16 @@ class User extends Component {
       showModal
     } = this.state
 
-    if (loading) {
-      return <h2>Loading...</h2>;
+    if (this.state.loading) {
+      return (
+        <div className="loader-container">
+          <div className="loader">
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+          </div>
+        </div>
+      );
     }
 
     return (
@@ -152,7 +168,7 @@ class User extends Component {
                     <img src={track.image} alt={track.album} className="track__image" />
                     <div className="track__details">
                       {
-                        track.name.length > 19
+                        track.name.length > 17
                           ? <div className="track__marquee">
                             <p className="track__name">{track.name}</p>
                           </div>

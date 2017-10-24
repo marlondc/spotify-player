@@ -4,14 +4,15 @@ import { test } from 'ramda';
 
 // our constants
 export const ADDED_TO_PLAYLIST = 'ADDED_TO_PLAYLIST';
+export const BAD_TOKEN = 'BAD_TOKEN';
 export const LOGGED_IN = 'LOGGED_IN';
 export const REQUEST_CURRENT_TRACK = 'REQUEST_CURRENT_TRACK';
 export const REQUEST_PLAYLIST = 'REQUEST_PLAYLIST';
 export const REQUEST_TOKENS = 'REQUEST_TOKENS'
 export const RECEIVE_CURRENT_TRACK = 'RECEIVE_CURRENT_TRACK';
 export const RECEIVE_PLAYLIST = 'RECEIVE_PLAYLIST';
-export const RECEIVE_TOKENS = 'RECEIVE_TOKENS'
-export const RECEIVE_TOKENS_ERROR = 'RECEIVE_TOKENS_ERROR'
+export const RECEIVE_TOKENS = 'RECEIVE_TOKENS';
+export const RECEIVE_TOKENS_ERROR = 'RECEIVE_TOKENS_ERROR';
 
 export const addToPlaylist = (url, accessToken) => (dispatch) => {
   const spotifyRegex = /([a-z,A-Z,0-9]{22})$/;
@@ -85,7 +86,9 @@ export const getCurrentTrack = (accessToken) => (dispatch) => {
         name: item.name,
       }
     })
-  })
+  }).catch(() => (
+    dispatch({ type: BAD_TOKEN })
+  ))
 }
 
 export const getPlaylistTracks = (accessToken) => (dispatch) => {
@@ -110,7 +113,9 @@ export const getPlaylistTracks = (accessToken) => (dispatch) => {
       type: RECEIVE_PLAYLIST,
       tracks,
     })
-  }).catch(err => console.log(err));
+  }).catch(err => (
+    dispatch({ type: BAD_TOKEN })
+  ));
 }
 
 export const getTokens = () => (dispatch) => {

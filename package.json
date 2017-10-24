@@ -28,7 +28,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "dev": "node_modules/.bin/nodemon api/server.js",
-    "build-css": "node-sass-chokidar src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive"
+    "build-css": "node-sass-chokidar src/stylesheets/App.scss -o src/stylesheets/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/stylesheets/App.scss -o src/stylesheets/ --watch --recursive"
   }
 }

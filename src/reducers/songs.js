@@ -1,5 +1,6 @@
 import {
   ADDED_TO_PLAYLIST,
+  BAD_TOKEN,
   LOGGED_IN,
   RECEIVE_CURRENT_TRACK,
   RECEIVE_PLAYLIST,
@@ -14,7 +15,6 @@ import {
 const initialState = {
   accessToken: null,
   currentTrack: false,
-  loading: true,
   logged_in: false,
   refreshToken: null,
   searchResults: [],
@@ -31,6 +31,14 @@ export default function reduce(state = initialState, action) {
     return {
       ...state,
       searchResults: [],
+    }
+  }
+
+  case BAD_TOKEN: {
+    return {
+      ...state,
+      accessToken: null,
+      refreshToken: null,
     }
   }
 
