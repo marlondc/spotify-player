@@ -9,7 +9,6 @@ const Login = props => (
         </div>
       </div>
     </div>
-    <div className="bottom bottom--login" />
   </div>
 );
 

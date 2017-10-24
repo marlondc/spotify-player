@@ -46,13 +46,13 @@ class User extends Component {
         loading: false,
       })
     ), 2000)
-    this.interval = setInterval(() => (
+    this.currentTrackInterval = setInterval(() => (
       this.props.getCurrentTrack(accessToken)
     ), 200);
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    clearInterval(this.currentTrackInterval);
   }
 
   handleInputChange(event) {

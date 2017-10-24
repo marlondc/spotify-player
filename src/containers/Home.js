@@ -36,7 +36,7 @@ const mapStateToProps = ({ songs }) => {
   return {
     ...songs,
     currentTrack: displayCurrentTrack,
-    tracks: isEmpty(displayPlaylistTracks)
+    tracks: isEmpty(displayPlaylistTracks) && !displayCurrentTrack
       ? songs.tracks
       : displayPlaylistTracks,
   }

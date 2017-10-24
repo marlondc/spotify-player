@@ -64,7 +64,7 @@ body {
 }
 
 .top--login {
-  height: 160px;
+  height: 100vh;
 }
 
 .fixed-height {
@@ -143,8 +143,14 @@ body {
   padding: 12px 20px;
 }
 
+.input__button:hover {
+  text-decoration: underline;
+}
+
 .input__button--login {
+  color: black;
   margin: 0;
+  text-decoration: none;
 }
 
 .input__button--disabled {
@@ -169,10 +175,6 @@ body {
 
 .bottom {
   padding-bottom: 40px;
-}
-
-.bottom--login {
-  height: 500px;
 }
 
 .title {
