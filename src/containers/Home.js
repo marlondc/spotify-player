@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import User from '../components/User';
+import Page from '../components/Page';
 import { setTokens, getPlaylistTracks, searchTrack, addToPlaylist, searchAlbum } from '../actions/songs';
 
 const mapStateToProps = ({ songs }) => ({
@@ -14,4 +14,4 @@ const mapDispatchToProps = dispatch => ({
   addToPlaylist: (url, accessToken) => dispatch(addToPlaylist(url, accessToken)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(User);
+export default connect(mapStateToProps, mapDispatchToProps)(Page);
