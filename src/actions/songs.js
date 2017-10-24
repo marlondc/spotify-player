@@ -3,22 +3,38 @@ import qs from 'qs';
 import { test } from 'ramda';
 
 // our constants
-export const SPOTIFY_TOKENS = 'SPOTIFY_TOKENS';
 export const REQUEST_PLAYLIST = 'REQUEST_PLAYLIST';
 export const RECEIVE_PLAYLIST = 'RECEIVE_PLAYLIST';
-export const SEARCH_TRACK = 'SEARCH_TRACK';
-export const TRACK_SEARCH_RESULTS = 'TRACK_SEARCH_RESULTS';
 export const ADDED_TO_PLAYLIST = 'ADDED_TO_PLAYLIST';
-export const SEARCH_ALBUM = 'SEARCH_ALBUM';
-export const ALBUM_SEARCH_RESULTS = 'ALBUM_SEARCH_RESULTS';
+export const LOGGED_IN = 'LOGGED_IN';
+export const REQUEST_TOKENS = 'REQUEST_TOKENS'
+export const RECEIVED_TOKENS = 'RECEIVED_TOKENS'
+export const RECEIVED_TOKENS_ERROR = 'RECEIVED_TOKENS_ERROR'
 
-/** set the app's access and refresh tokens */
-export const setTokens = (accessToken, refreshToken) => ({
-  type: SPOTIFY_TOKENS,
-  accessToken,
-  refreshToken,
-  loading: false,
-});
+export const login = () => {
+  return {
+    type: LOGGED_IN,
+  }
+};
+
+export const getTokens = () => (dispatch) => {
+  dispatch({
+    type: REQUEST_TOKENS,
+  });
+  axios
+    .get('http://localhost:8000/tokens')
+    .then((response) => {
+      dispatch({
+        type: RECEIVED_TOKENS,
+        data: response.data
+      })
+    })
+    .catch(() => {
+      dispatch({
+        type: RECEIVED_TOKENS_ERROR,
+      })
+    })
+}
 
 export const getPlaylistTracks = (accessToken) => (dispatch) => {
   dispatch({
@@ -43,62 +59,6 @@ export const getPlaylistTracks = (accessToken) => (dispatch) => {
       tracks,
     })
   }).catch(err => console.log(err));
-}
-
-export const searchTrack = (track, accessToken) => (dispatch) => {
-  dispatch({
-    type: SEARCH_TRACK,
-  })
-  const query = qs.stringify({
-    q: track,
-    type: 'track',
-    limit: 5,
-  });
-  axios.get(`https://api.spotify.com/v1/search?${query}`, {
-    headers: {
-      Accept: 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-  }).then(({ data }) => {
-    const searchResults = data.tracks.items.map(item => ({
-      artist: item.artists[0].name,
-      name: item.name,
-      href: item.href,
-      id: item.id,
-    }));
-    dispatch({
-      type: TRACK_SEARCH_RESULTS,
-      results: searchResults,
-    })
-  });
-}
-
-export const searchAlbum = (album, accessToken) => (dispatch) => {
-  dispatch({
-    type: SEARCH_ALBUM,
-  })
-  const query = qs.stringify({
-    q: album,
-    type: 'album',
-    limit: 5,
-  });
-  axios.get(`https://api.spotify.com/v1/search?${query}`, {
-    headers: {
-      Accept: 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-  }).then(({ data }) => {
-    const searchResults = data.albums.items.map(item => ({
-      artist: item.artists[0].name,
-      name: item.name,
-      href: item.href,
-      id: item.id,
-    }));
-    dispatch({
-      type: ALBUM_SEARCH_RESULTS,
-      results: searchResults,
-    })
-  });
 }
 
 export const addToPlaylist = (url, accessToken) => (dispatch) => {

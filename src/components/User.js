@@ -26,10 +26,7 @@ class User extends Component {
   }
 
   componentWillMount() {
-    const { match } = this.props;
-    const { params } = match
-    const { accessToken, refreshToken } = params;
-    this.props.setTokens(accessToken, refreshToken)
+    const { accessToken } = this.props.songs;
     this.props.getPlaylistTracks(accessToken);
   }
 
@@ -60,10 +57,8 @@ class User extends Component {
 
   render() {
     const {
-      accessToken,
       loading,
       tracks,
-      searchResults,
     } = this.props.songs;
 
     const {

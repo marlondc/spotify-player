@@ -1,12 +1,11 @@
 import {
-  SPOTIFY_TOKENS,
   REQUEST_PLAYLIST,
   RECEIVE_PLAYLIST,
-  SEARCH_TRACK,
-  TRACK_SEARCH_RESULTS,
   ADDED_TO_PLAYLIST,
-  SEARCH_ALBUM,
-  ALBUM_SEARCH_RESULTS,
+  LOGGED_IN,
+  REQUEST_TOKENS,
+  RECEIVED_TOKENS,
+  RECEIVED_TOKENS_ERROR,
 } from '../actions/songs';
 
 /** The initial state; no tokens and no user info */
@@ -16,6 +15,7 @@ const initialState = {
   loading: true,
   tracks: [],
   searchResults: [],
+  logged_in: false,
 };
 
 /**
@@ -23,15 +23,6 @@ const initialState = {
  */
 export default function reduce(state = initialState, action) {
   switch (action.type) {
-  case SPOTIFY_TOKENS: {
-    const {accessToken, refreshToken, loading} = action;
-    return {
-      ...state,
-      accessToken,
-      refreshToken,
-      loading,
-    };
-  }
 
   case RECEIVE_PLAYLIST: {
     const { tracks } = action;
@@ -40,19 +31,9 @@ export default function reduce(state = initialState, action) {
       tracks,
     }
   }
-  
-  case SEARCH_ALBUM:
-  case SEARCH_TRACK:
+
   case REQUEST_PLAYLIST: {
     return state;
-  }
-
-  case TRACK_SEARCH_RESULTS: {
-    const { results } = action;
-    return {
-      ...state,
-      searchResults: results,
-    }
   }
 
   case ADDED_TO_PLAYLIST: {
@@ -62,12 +43,32 @@ export default function reduce(state = initialState, action) {
     }
   }
 
-  case ALBUM_SEARCH_RESULTS: {
-    const { results } = action;
+  case LOGGED_IN: {
     return {
       ...state,
-      searchResults: results,
-    };
+      logged_in: true,
+    }
+  }
+
+  case REQUEST_TOKENS: {
+    return state;
+  }
+
+  case RECEIVED_TOKENS_ERROR : {
+    return state;
+  }
+
+  case RECEIVED_TOKENS: {
+    const {
+      accessToken,
+      refreshToken,
+    } = action.data;
+    return {
+      ...state,
+      accessToken,
+      loading: false,
+      refreshToken,
+    }
   }
 
   default:

@@ -8,7 +8,6 @@ import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-rou
 import thunkMiddleware from 'redux-thunk';
 import registerServiceWorker from './registerServiceWorker';
 
-import App from './App';
 import Home from './containers/Home';
 import Login from './components/Login';
 import './stylesheets/App.css';
@@ -34,7 +33,7 @@ render(
   <Provider store={store}>
     <Router history={history}>
       <div>
-        <Route path='/' component={App} />
+        <Route path='/' component={Home} />
         <Route path='/login' component={Login} />
         <Route path="/user/:accessToken/:refreshToken" component={Home} />
       </div>
