@@ -28,6 +28,7 @@ class User extends Component {
   componentWillMount() {
     const { accessToken } = this.props.songs;
     this.props.getPlaylistTracks(accessToken);
+    this.props.getCurrentTrack(accessToken);
   }
 
   handleInputChange(event) {

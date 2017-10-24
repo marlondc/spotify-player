@@ -1,8 +1,9 @@
 import { connect } from 'react-redux';
 import Page from '../components/Page';
 import {
-  getPlaylistTracks,
   addToPlaylist,
+  getCurrentTrack,
+  getPlaylistTracks,
   login,
   getTokens,
  } from '../actions/songs';
@@ -12,8 +13,9 @@ const mapStateToProps = ({ songs }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getPlaylistTracks: (accessToken) => dispatch(getPlaylistTracks(accessToken)),
   addToPlaylist: (url, accessToken) => dispatch(addToPlaylist(url, accessToken)),
+  getCurrentTrack: (accessToken) => dispatch(getCurrentTrack(accessToken)),
+  getPlaylistTracks: (accessToken) => dispatch(getPlaylistTracks(accessToken)),
   getTokens: () => dispatch(getTokens()),
   login: () => login(),
 });

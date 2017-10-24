@@ -4,8 +4,8 @@ import {
   ADDED_TO_PLAYLIST,
   LOGGED_IN,
   REQUEST_TOKENS,
-  RECEIVED_TOKENS,
-  RECEIVED_TOKENS_ERROR,
+  RECEIVE_TOKENS,
+  RECEIVE_TOKENS_ERROR,
 } from '../actions/songs';
 
 /** The initial state; no tokens and no user info */
@@ -24,18 +24,6 @@ const initialState = {
 export default function reduce(state = initialState, action) {
   switch (action.type) {
 
-  case RECEIVE_PLAYLIST: {
-    const { tracks } = action;
-    return {
-      ...state,
-      tracks,
-    }
-  }
-
-  case REQUEST_PLAYLIST: {
-    return state;
-  }
-
   case ADDED_TO_PLAYLIST: {
     return {
       ...state,
@@ -50,15 +38,15 @@ export default function reduce(state = initialState, action) {
     }
   }
 
-  case REQUEST_TOKENS: {
-    return state;
+  case RECEIVE_PLAYLIST: {
+    const { tracks } = action;
+    return {
+      ...state,
+      tracks,
+    }
   }
 
-  case RECEIVED_TOKENS_ERROR : {
-    return state;
-  }
-
-  case RECEIVED_TOKENS: {
+  case RECEIVE_TOKENS: {
     const {
       accessToken,
       refreshToken,
@@ -69,6 +57,18 @@ export default function reduce(state = initialState, action) {
       loading: false,
       refreshToken,
     }
+  }
+
+  case RECEIVE_TOKENS_ERROR : {
+    return state;
+  }
+
+  case REQUEST_PLAYLIST: {
+    return state;
+  }
+
+  case REQUEST_TOKENS: {
+    return state;
   }
 
   default:
