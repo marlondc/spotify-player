@@ -12,7 +12,6 @@ import {
   START_PLAYBACK,
 } from '../actions/songs';
 
-/** The initial state; no tokens and no user info */
 const initialState = {
   accessToken: null,
   currentTrack: false,
@@ -22,9 +21,6 @@ const initialState = {
   tracks: [],
 };
 
-/**
- * Our reducer
- */
 export default function reduce(state = initialState, action) {
   switch (action.type) {
 

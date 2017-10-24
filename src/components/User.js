@@ -11,6 +11,13 @@ const invalidURI = (uri) => {
   return !test(spotifyRegex, uri)
 }
 
+const timeLeft = (track) => {
+  const millis = track.duration - track.progress;
+  const minutes = Math.floor(millis / 60000);
+  const seconds = ((millis % 60000) / 1000).toFixed(0);
+  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+}
+
 class User extends Component {
   constructor(props) {
     super(props);
@@ -33,11 +40,19 @@ class User extends Component {
   }
 
   componentDidMount() {
+    const { accessToken } = this.props;
     setTimeout(() => (
       this.setState({
         loading: false,
       })
     ), 2000)
+    this.interval = setInterval(() => (
+      this.props.getCurrentTrack(accessToken)
+    ), 200);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   handleInputChange(event) {
@@ -156,8 +171,11 @@ class User extends Component {
                         currentTrack.isPlaying
                           ? <div className="track__status">
                             <div className="track__status__progress-bar"></div>
-                            <div className="track__status__progress-bar track__status__progress-bar--fill"></div>
-                            <p className="track__status__time">1:34 <span>left</span></p>
+                            <div
+                              className="track__status__progress-bar track__status__progress-bar--fill"
+                              style={{ width: currentTrack.progress / currentTrack.duration * 75}}
+                            />
+                            <p className="track__status__time">{timeLeft(currentTrack)} <span>left</span></p>
                           </div>
                           : <div className="input__button--play">
                             <button
@@ -167,7 +185,15 @@ class User extends Component {
                           </div>
                       }
                     </div>
-                    : <p className="track__name">No currently playing track</p>
+                    : <div>
+                      <p className="track__name">No currently playing track</p>
+                      <div className="input__button--play">
+                        <button
+                          className="input__button"
+                          onClick={() => startPlayback(accessToken, 0)}
+                        > Play </button>
+                      </div>
+                    </div>
                 }
               <div className="title">
                 <p className="title__text">Up next</p>
