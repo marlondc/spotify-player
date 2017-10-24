@@ -67,8 +67,10 @@ class User extends Component {
 
   render() {
     const {
-      tracks,
+      accessToken,
       currentTrack,
+      tracks,
+      startPlayback,
     } = this.props;
 
     const {
@@ -160,7 +162,7 @@ class User extends Component {
                           : <div className="input__button--play">
                             <button
                               className="input__button"
-                              onClick={() => console.log('play')}
+                              onClick={() => startPlayback(accessToken)}
                             > Play </button>
                           </div>
                       }

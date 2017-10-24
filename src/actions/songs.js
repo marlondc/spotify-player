@@ -13,6 +13,7 @@ export const RECEIVE_CURRENT_TRACK = 'RECEIVE_CURRENT_TRACK';
 export const RECEIVE_PLAYLIST = 'RECEIVE_PLAYLIST';
 export const RECEIVE_TOKENS = 'RECEIVE_TOKENS';
 export const RECEIVE_TOKENS_ERROR = 'RECEIVE_TOKENS_ERROR';
+export const START_PLAYBACK = "START_PLAYBACK";
 
 export const addToPlaylist = (url, accessToken) => (dispatch) => {
   const spotifyRegex = /([a-z,A-Z,0-9]{22})$/;
@@ -76,7 +77,6 @@ export const getCurrentTrack = (accessToken) => (dispatch) => {
     }
   }).then(({data}) => {
     const { item } = data;
-
     dispatch({
       type: RECEIVE_CURRENT_TRACK,
       track: {
@@ -146,3 +146,26 @@ export const login = () => {
     type: LOGGED_IN,
   }
 };
+
+export const startPlayback = (accessToken) => (dispatch) => {
+  dispatch({
+    type: START_PLAYBACK,
+  })
+
+  axios({
+    method: 'put',
+    url: 'https://api.spotify.com/v1/me/player/play',
+    data: {
+      context_uri: process.env.REACT_APP_SPOTIFY_PLAYLIST_URI,
+      offset: {
+        position: 0,
+      }
+    },
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`,
+    }
+  }).catch((err) => {
+    console.log(err)
+  })
+}

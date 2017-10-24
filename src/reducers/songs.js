@@ -9,6 +9,7 @@ import {
   REQUEST_CURRENT_TRACK,
   REQUEST_PLAYLIST,
   REQUEST_TOKENS,
+  START_PLAYBACK,
 } from '../actions/songs';
 
 /** The initial state; no tokens and no user info */
@@ -90,6 +91,10 @@ export default function reduce(state = initialState, action) {
   }
 
   case RECEIVE_TOKENS_ERROR : {
+    return state;
+  }
+
+  case START_PLAYBACK: {
     return state;
   }
 
