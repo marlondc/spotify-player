@@ -117,6 +117,9 @@ body {
   padding: 0;
   text-decoration: underline; }
 
+.bottom {
+  padding-bottom: 40px; }
+
 .title {
   margin: 30px 0;
   position: relative; }
@@ -147,10 +150,28 @@ body {
 
 .track__details {
   display: inline-block;
-  vertical-align: top; }
+  vertical-align: top;
+  width: 210px; }
 
 .track__details p {
   margin: 0; }
+
+.track__marquee {
+  line-height: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%; }
+
+.track__marquee p {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 15s linear infinite; }
+
+@keyframes marquee {
+  0% {
+    transform: translate(0, 0); }
+  100% {
+    transform: translate(-100%, 0); } }
 
 .track__name {
   font-size: 22px;

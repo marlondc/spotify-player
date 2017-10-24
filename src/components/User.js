@@ -150,7 +150,13 @@ class User extends Component {
                   <div className="track__details">
                     <p className="track__name">{track.name}</p>
                     <p className="track__artist">{track.artist}</p>
-                    <p className="track__album">{track.album}</p>
+                    {
+                      track.album.length > 22
+                        ? <div className="track__marquee">
+                          <p className="track__album">{track.album}</p>
+                        </div>
+                        : <p className="track__album">{track.album}</p>
+                    }
                   </div>
                 </div>
               ))
