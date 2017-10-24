@@ -173,7 +173,13 @@ class User extends Component {
                             <div className="track__status__progress-bar"></div>
                             <div
                               className="track__status__progress-bar track__status__progress-bar--fill"
-                              style={{ width: currentTrack.progress / currentTrack.duration * 75}}
+                              style={
+                                {
+                                  width: currentTrack.progress / currentTrack.duration * 75 > 5
+                                    ? `${currentTrack.progress / currentTrack.duration * 75}%`
+                                    : 5
+                                }
+                              }
                             />
                             <p className="track__status__time">{timeLeft(currentTrack)} <span>left</span></p>
                           </div>
