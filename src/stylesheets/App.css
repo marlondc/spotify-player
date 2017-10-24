@@ -54,6 +54,10 @@ body {
 .top--login {
   height: 160px; }
 
+.fixed-height {
+  height: 100vh;
+  overflow: hidden; }
+
 .content {
   margin: 0 auto;
   max-width: 320px;
