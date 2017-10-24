@@ -111,7 +111,7 @@ class User extends Component {
                   type="submit"
                   value="Add to playlist"
                   className={
-                    classnames('input__add-button', { 'input__add-button--disabled': invalidURI(spotifyURI) })
+                    classnames('input__button', { 'input__button--disabled': invalidURI(spotifyURI) })
                   }
                   onClick={this.handleSubmit}
                 />
@@ -150,11 +150,20 @@ class User extends Component {
                           }
                         </div>
                       </div>
-                      <div className="track__status">
-                        <div className="track__status__progress-bar"></div>
-                        <div className="track__status__progress-bar track__status__progress-bar--fill"></div>
-                        <p className="track__status__time">1:34 <span>left</span></p>
-                      </div>
+                      {
+                        currentTrack.isPlaying
+                          ? <div className="track__status">
+                            <div className="track__status__progress-bar"></div>
+                            <div className="track__status__progress-bar track__status__progress-bar--fill"></div>
+                            <p className="track__status__time">1:34 <span>left</span></p>
+                          </div>
+                          : <div className="input__button--play">
+                            <button
+                              className="input__button"
+                              onClick={() => console.log('play')}
+                            > Play </button>
+                          </div>
+                      }
                     </div>
                     : <p className="track__name">No currently playing track</p>
                 }

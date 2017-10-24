@@ -131,7 +131,7 @@ body {
   width: 100%;
 }
 
-.input__add-button {
+.input__button {
   background: #ef9783;
   border-radius: 20px;
   border-style: none;
@@ -143,13 +143,17 @@ body {
   padding: 12px 20px;
 }
 
-.input__add-button--login {
+.input__button--login {
   margin: 0;
 }
 
-.input__add-button--disabled {
+.input__button--disabled {
   opacity: 0.4;
   cursor: auto;
+}
+
+.input__button--play {
+  text-align: center;
 }
 
 .info__text {

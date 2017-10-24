@@ -76,14 +76,18 @@ export const getCurrentTrack = (accessToken) => (dispatch) => {
     }
   }).then(({data}) => {
     const { item } = data;
+
     dispatch({
       type: RECEIVE_CURRENT_TRACK,
       track: {
         album: item.album.name,
         artist: item.artists[0].name,
+        duration: data.duration_ms,
         id: item.id,
         image: item.album.images[0].url,
+        isPlaying: data.is_playing,
         name: item.name,
+        progress: data.progress_ms,
       }
     })
   }).catch(() => (

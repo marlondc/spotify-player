@@ -14,7 +14,7 @@ const mapStateToProps = ({ songs }) => {
   let displayCurrentTrack;
 
   const filteredTracks = filter(track => (
-    equals(track, songs.currentTrack)
+    equals(track.id, songs.currentTrack.id)
   ), songs.tracks);
 
   displayCurrentTrack = isEmpty(filteredTracks)
