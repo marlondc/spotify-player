@@ -48,11 +48,15 @@ class User extends Component {
     ), 2000)
     this.currentTrackInterval = setInterval(() => (
       this.props.getCurrentTrack(accessToken)
-    ), 200);
+    ), 1000);
+    this.currentPlaylistTracks = setInterval(() => (
+      this.props.getPlaylistTracks()
+    ), 60000);
   }
 
   componentWillUnmount() {
     clearInterval(this.currentTrackInterval);
+    clearInterval(this.currentPlaylistTracks);
   }
 
   handleInputChange(event) {
@@ -177,7 +181,7 @@ class User extends Component {
                                 {
                                   width: currentTrack.progress / currentTrack.duration * 75 > 5
                                     ? `${currentTrack.progress / currentTrack.duration * 75}%`
-                                    : 5
+                                    : '5%'
                                 }
                               }
                             />

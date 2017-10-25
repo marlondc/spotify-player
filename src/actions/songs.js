@@ -90,9 +90,10 @@ export const getCurrentTrack = (accessToken) => (dispatch) => {
         progress: data.progress_ms,
       }
     })
-  }).catch(() => (
-    dispatch({ type: BAD_TOKEN })
-  ))
+  }).catch(() => {
+    console.log('hello');
+    // dispatch({ type: BAD_TOKEN })
+  })
 }
 
 export const getPlaylistTracks = (accessToken) => (dispatch) => {
@@ -117,9 +118,10 @@ export const getPlaylistTracks = (accessToken) => (dispatch) => {
       type: RECEIVE_PLAYLIST,
       tracks,
     })
-  }).catch(err => (
-    dispatch({ type: BAD_TOKEN })
-  ));
+  }).catch(err => {
+    console.log('bye');
+    // dispatch({ type: BAD_TOKEN })
+  });
 }
 
 export const getTokens = () => (dispatch) => {
@@ -127,7 +129,7 @@ export const getTokens = () => (dispatch) => {
     type: REQUEST_TOKENS,
   });
   axios
-    .get('http://localhost:8000/tokens')
+    .get(`${process.env.REACT_APP_BACKEND_LOGIN}/tokens`)
     .then((response) => {
       dispatch({
         type: RECEIVE_TOKENS,
